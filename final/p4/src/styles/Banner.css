@@ -1,0 +1,32 @@
+.banner {
+  width: 100%;
+  height: 100vh;
+  background-image: url(Lawyer.jpg);
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-position: center; /* Default position for larger screens */
+}
+
+.hire-button {
+  padding: 14px 32px;
+  font-size: 20px;
+  background-color: #f2aa4c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.hire-button:hover {
+  background-color: #d28c2e;
+}
+
+/* Adjust the background to center the lawyer on mobile */
+@media screen and (max-width: 768px) {
+  .banner {
+    background-position: center center; /* Center the image on mobile */
+  }
+}

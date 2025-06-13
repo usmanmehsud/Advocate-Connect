@@ -1,0 +1,163 @@
+/* Reset & base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #211e1e;
+  width: 100% !important;
+  
+}
+
+/* Outer profile wrapper */
+.lawyer-profile {
+  background-image: linear-gradient(935deg ,white , rgb(178, 224, 242));
+  display: flex;
+  flex-wrap: wrap;
+  padding: 60px 40px;
+  width: 100%;
+  /* margin: auto; */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+}
+
+/* Left side - profile image */
+.profile-left {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.lawyer-profile-image {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid #1f3c88;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Right side - details & buttons */
+.profile-right {
+  flex: 3;
+  padding: 20px 40px;
+  position: relative;
+  width: 100%; /* Updated from min-width */
+}
+
+/* Desktop-specific min-width */
+@media screen and (min-width: 769px) {
+  .profile-right {
+    min-width: 600px;
+  }
+}
+
+.status-button {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  padding: 10px 18px;
+  background-color: #1f3c88;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.profile-right h2 {
+  font-size: 28px;
+  color: #1f3c88;
+  margin-bottom: 16px;
+}
+
+/* Info displayed in two columns */
+.lawyer-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 32px;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.lawyer-info-grid strong {
+  color: #444;
+}
+
+/* Biography */
+.bio {
+  margin-top: 20px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* Button container */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Button styles */
+.hire-button,
+.edit-button {
+  padding: 6px 12px;
+  background-color: #1f3c88;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
+
+.hire-button:hover,
+.edit-button:hover {
+  background-color: #142a5d;
+}
+
+/* Responsive layout for mobile */
+@media screen and (max-width: 768px) {
+  .lawyer-profile {
+    flex-direction: column;
+    padding: 30px 20px;
+  }
+
+  .profile-right {
+    padding: 20px;
+    width: 100%;
+  }
+
+
+  .lawyer-profile-image{
+    height: 90px;
+    width: 90px;
+  }
+  .lawyer-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .status-button {
+    position: static;
+    margin-bottom: 16px;
+    width: 100%;
+  }
+
+  .button-group {
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+
+  .hire-button,
+  .edit-button {
+    width: 100%;
+  }
+}

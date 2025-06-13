@@ -1,0 +1,395 @@
+/* Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-color, #f9f9f9);
+  color: var(--text-color, #333);
+  background-image: linear-gradient(935deg ,white , rgb(178, 224, 242));
+}
+
+.new0{
+  margin-bottom: -54px;
+  
+}
+
+.hire-page {
+  height: 90vh;
+  background-image: linear-gradient(935deg ,white , rgb(178, 224, 242));
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, #2f3e56, #1b2a3d);
+  color: #fff;
+  text-align: center;
+  padding: 40px 20px;
+  border-bottom: 5px solid #1000f7;
+  padding-top: 5rem;
+
+}
+
+.header h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  font-family: 'Georgia', serif;
+}
+
+.header p {
+  font-size: 1rem;
+  font-weight: lighter;
+}
+
+/* Filter Box */
+.filter-box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 1rem;
+  margin: 1.5rem auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filter-box input,
+.filter-box select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  min-width: 180px;
+  font-size: 14px;
+}
+
+.search-btn {
+  background-color: #28a745;
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Advocate Card */
+.advocate-card {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background-color: var(--card-bg, #fff);
+  padding: 20px;
+  margin: 20px auto; /* ✅ Center horizontally */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #0056b3;
+  transition: transform 0.2s ease;
+  max-width: 1100px; /* ✅ Restrict width to prevent full screen stretch */
+}
+
+.advocate-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Lawyer Info Left */
+.lawyer-info-left {
+  display: flex;
+  flex: 2;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.avatar-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #dde7f1;
+  color: #1e3a8a;
+  font-weight: bold;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.lawyer-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.under-avatar {
+  flex: 1;
+  text-align: left;
+}
+
+.lawyer-username {
+  margin: 8px 0 4px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.lawyer-details {
+  flex: 2;
+}
+
+.lawyer-details h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.lawyer-details p {
+  margin: 4px 0;
+  color: #555;
+}
+
+.case-tag {
+  background-color: #f3f4f6;
+  color: #333;
+  padding: 4px 10px;
+  margin: 5px 5px 0 0;
+  border-radius: 20px;
+  font-size: 12px;
+  display: inline-block;
+}
+
+.buttons {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.buttons button {
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.buttons button:first-child {
+  background-color: #25eb39;
+  color: #000;
+}
+
+.buttons button:first-child:hover {
+  background-color: #6dba29;
+}
+
+.buttons button:last-child {
+  background-color: #f3f4f6;
+  color: #333;
+}
+
+.buttons button:last-child:hover {
+  background-color: #e5e7eb;
+}
+
+/* Consultation Box */
+.consultation-box {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  padding: 16px;
+  border-radius: 10px;
+  min-width: 200px;
+}
+
+.consultation-box p {
+  margin: 6px 0;
+  font-size: 14px;
+}
+
+.consultation-box .available {
+  color: green;
+  font-weight: 600;
+}
+
+.footer {
+  background-color: #000;
+  color: #f0f0f0;
+  text-align: center;
+  padding: 20px 10px;
+  font-size: 16px;
+  box-shadow: 0 -2px 10px rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer p {
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive Styles */
+/* Tablet (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .advocate-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .lawyer-info-left {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .under-avatar {
+    text-align: center;
+  }
+
+  .buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .buttons button {
+    width: 100%;
+  }
+
+  .consultation-box {
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .filter-box input,
+  .filter-box select {
+    min-width: 140px;
+  }
+}
+
+.filter-box select{
+  /* background-color: yellow; */
+  margin-top: .8rem;
+}
+
+/* Mobile (max-width: 768px) */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 1.5rem;
+  }
+
+  .header p {
+    font-size: 0.9rem;
+  }
+
+  .filter-box {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .filter-box input,
+  .filter-box select,
+  .search-btn {
+    width: 100%;
+  }
+
+  .avatar-circle {
+    width: 60px;
+    height: 60px;
+    font-size: 20px;
+  }
+
+  .lawyer-username,
+  .lawyer-details h3 {
+    text-align: center;
+  }
+
+  .advocate-card {
+    padding: 15px;
+    margin: 15px 0;
+  }
+
+  .case-tag {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+
+  .consultation-box {
+    padding: 12px;
+  }
+}
+@media only screen and (max-width: 480px) {
+    .avatar-circle {
+    width: 60px;
+    height: 60px;
+    font-size: 20px;
+    margin-left: 45px;
+  }
+  
+}
+
+.filter-box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center; /* aligns items vertically */
+  gap: 10px;
+  padding: 1rem;
+  margin: 1.5rem auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filter-box input,
+.filter-box select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  flex: 1 1 auto; /* allow to shrink/grow */
+  min-width: 150px;
+  max-width: 200px;
+}
+
+.search-btn {
+  background-color: #28a745;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  font-size: 18px;
+  min-width: 50px;
+}
+
+
+.search-btn {
+  background-color: #3b28a7; /* Green background */
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  font-size: 18px;
+}
+
+.case-tag {
+  background-color: #e0e7ff;
+  color: #1e40af;
+  padding: 5px 12px;
+  margin: 5px 5px 0 0;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.case-tag:hover {
+  background-color: #c7d2fe;
+}
+
+.advocate-list{
+  background-image: linear-gradient(935deg ,white , rgb(178, 224, 242));
+}

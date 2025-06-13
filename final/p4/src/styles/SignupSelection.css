@@ -1,0 +1,110 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    height: 100%;
+    font-family: 'Segoe UI', sans-serif;
+    transition: background 0.3s ease, color 0.3s ease;
+    
+  }
+  
+  .selection-container {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom right, #f3f4f6, #cbd5e1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .selection-container.dark {
+    background: linear-gradient(to bottom right, #0f172a, #1e293b);
+    color: #f1f5f9;
+  }
+  
+  .selection-card {
+    background: white;
+    padding: 4rem 5rem;
+    border-radius: 2rem;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    transition: background 0.3s ease, color 0.3s ease;
+    max-width: 90%;
+  }
+  
+  .selection-container.dark .selection-card {
+    background: #1e293b;
+    color: #f8fafc;
+  }
+  
+  .selection-title {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  
+  .select-btn {
+    padding: 1rem 2.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 300px;
+  }
+  
+  .select-btn.user {
+    background: linear-gradient(to right, #000000, #000000);
+    color: white;
+  }
+  
+  .select-btn.admin {
+    background: linear-gradient(to right, #000000, #000000);
+    color: white;
+  }
+  
+  .select-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+  }
+  
+  .mode-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #f472b6;
+    color: white;
+    font-size: 1.2rem;
+    padding: 0.5rem 0.8rem;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    z-index: 100;
+  }
+  
+  .mode-toggle:hover {
+    background: #ec4899;
+  }
+
+  .dark-mode .select-btn.user {
+    background: linear-gradient(to right, #ffffff, #ffffff);
+    color: rgb(0, 0, 0);
+  }
+  
+  .dark-mode .select-btn.admin {
+    background: linear-gradient(to right, #ffffff, #ffffff);
+    color: rgb(0, 0, 0);
+  }
+  

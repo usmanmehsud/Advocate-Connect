@@ -1,0 +1,212 @@
+/* Remove scrollbar only within Admin Profile page */
+.admin-profile-container {
+    height: 100vh;
+  }
+  
+  
+  body:has(.admin-profile-container) {
+
+    margin-bottom: 200px;  }
+  
+
+    .admin-profile-wrapper {
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--background, #f9f9f9); /* optional */
+      }
+      
+      .admin-profile-container {
+        width: 90%;
+        max-width: 900px;
+        background-color: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        max-height: 95vh;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      
+
+.admin-profile-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f8f9fb;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+    font-family: "Segoe UI", sans-serif;
+    color: #2c3e50;
+  }
+  
+  .profile-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #183153;
+  }
+
+  .profile-image {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 50%; /* Circular border */
+    border: 5px solid #183153;
+    background-color: #ddd; /* Default background if no image is set */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    transition: opacity 0.3s ease;
+    image-rendering: smooth; /* Smooth image rendering */
+  }
+  
+  .profile-image.loading {
+    opacity: 0.5; /* Show loading opacity until image is fully loaded */
+  }
+  
+  .profile-image.loaded {
+    opacity: 1; /* Once loaded, set full opacity */
+  }
+  
+  
+  .profile-card {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .profile-image-section {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .profile-image {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid #183153;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+  }
+  
+  .profile-image-section input {
+    margin-top: 10px;
+  }
+  
+  .profile-info-section {
+    flex: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .profile-info-section label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    color: #34495e;
+  }
+  
+  .profile-info-section input {
+    padding: 10px 12px;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    transition: border 0.3s ease;
+  }
+  
+  .profile-info-section input:focus {
+    border-color: #1d4977;
+    outline: none;
+  }
+  
+  .password-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .password-wrapper input {
+    width: 100%;
+    padding-right: 40px;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #1d4977;
+  }
+  
+  .save-btn {
+    padding: 14px 30px;
+    background: linear-gradient(to right, #183153, #1d4977);
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(24, 49, 83, 0.3);
+    transition: background 0.3s ease, transform 0.2s;
+  }
+  
+  .save-btn:hover {
+    background: linear-gradient(to right, #1d4977, #183153);
+    transform: scale(1.03);
+  }
+
+  /* Dark mode styles */
+.dark-mode .admin-profile-wrapper {
+    background-color: #121212;
+  }
+
+  
+
+  .dark-mode .admin-profile-container {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+  }
+  
+  .dark-mode .profile-title {
+    color: #ffffff;
+  }
+  
+  .dark-mode .profile-info-section label {
+    color: #dddddd;
+  }
+  
+  .dark-mode .profile-info-section input {
+    background-color: #2b2b2b;
+    color: #ffffff;
+    border: 1px solid #444;
+  }
+  
+  .dark-mode .profile-info-section input:focus {
+    border-color: #6ca0dc;
+  }
+  
+  .dark-mode .save-btn {
+    background: linear-gradient(to right, #4f7ccf, #375ea8);
+    box-shadow: 0 4px 12px rgba(76, 130, 255, 0.3);
+  }
+  
+  .dark-mode .save-btn:hover {
+    background: linear-gradient(to right, #375ea8, #4f7ccf);
+  }
+  

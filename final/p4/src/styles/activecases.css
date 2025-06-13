@@ -1,0 +1,96 @@
+/* ActiveCases.css */
+
+
+
+.active-cases-page {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: linear-gradient(935deg ,white , rgb(178, 224, 242));
+  min-height: 100vh;
+  padding: 40px 20px;
+  color: #222;
+  margin-top: 5rem !important;
+
+}
+
+.active-cases-header {
+  max-width: 900px;
+  margin: 0 auto 40px auto;
+  text-align: center;
+  border-bottom: 2px solid #0057b7;
+  padding-bottom: 15px;
+}
+
+.active-cases-header h1 {
+  font-size: 2.8rem;
+  color: #0057b7;
+  margin-bottom: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.active-cases-header p {
+  font-size: 1.2rem;
+  color: #444;
+  font-weight: 400;
+  opacity: 0.8;
+}
+.new54{
+  width: 110%;
+  margin-left: -50px;
+  margin-bottom: -90px;
+}
+
+
+@media only screen and (max-width: 720px) {
+  .new54{
+    
+    margin-left: -20px;
+    width: 108%;
+  }
+  .advocate-card{
+    width: 80% !important;
+    
+  }
+  .advocate-card-bottom{
+    width: 100% !important;
+  }
+  .cases-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+}
+@media only screen and (max-width: 480px) {
+  .new54{
+    
+    margin-left: -20px;
+    width: 110%;
+  }
+      .avatar-circle{
+        margin-left: 0px;
+      }
+  
+}
+
+.advocate-card{
+  width: 45%;
+  padding: 20px;
+}
+
+.cases-container{
+
+  width: 100% !important;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.active-bottom-container{
+  width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
