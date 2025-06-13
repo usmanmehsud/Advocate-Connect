@@ -19,7 +19,7 @@ app.use(express.json());
 // MongoDB Connection
 mongoose
   .connect(
-    "mongodb+srv://aliusmandata:Xvp44hMaap3lPxdf@lawyers.g5rvn1y.mongodb.net/lawyerHiring?retryWrites=true&w=majority&appName=Lawyers"
+    "mongodb://localhost/advconnect"
   )
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log("MongoDB error:", err));
