@@ -81,7 +81,7 @@ app.post("/book-lawyer/:id", async (req, res) => {
         });
 
         await transporter.sendMail({
-          from: "aliusmandata@gmail.com",
+          from: "usmanmehsud3@gmail.com",
           to: existsLawyer.email,
           subject: "Booded for Case",
           html: `<p>You are booked by ${existsUser.username} check active cases.
@@ -93,7 +93,7 @@ Please ensure you are available and respond to them.</p>`,
         res.status(200).json({ message: "lawyer Booked Successfuly" });
       }
       const result = userCases.filter(item => item.userId.equals(userId));
-      console.log("Results"+result)
+      console.log("Results" + result)
       if (!result[0]) {
         const booklawyer = await ActiveCases.create({
           userId: userId,
@@ -109,7 +109,7 @@ Please ensure you are available and respond to them.</p>`,
         });
 
         await transporter.sendMail({
-          from: "aliusmandata@gmail.com",
+          from: "usmanmehsud3@gmail.com",
           to: existsLawyer.email,
           subject: "Booded for Case",
           html: `<p>You are booked by ${existsUser.username} check active cases.
@@ -124,7 +124,7 @@ Please ensure you are available and respond to them.</p>`,
         return res.status(400).json({ message: "Already Booked" })
       }
 
-      
+
     } else {
       res.status(500).json({ message: "Failed to book Lawyer" });
     }
@@ -155,8 +155,8 @@ const authenticateToken = (req, res, next) => {
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "aliusmandata@gmail.com",
-    pass: "ilmvuuypymtkdldx", // App password
+    user: "usmanmehsud3@gmail.com",
+    pass: "sukq klyd ksjn ctkx", // App password
   },
 });
 
@@ -255,7 +255,7 @@ app.post("/signup", upload.single("image"), async (req, res) => {
     // await user.save()
 
     await transporter.sendMail({
-      from: "aliusmandata@gmail.com",
+      from: "usmanmehsud3@gmail.com",
       to: email,
       subject: "Your OTP Verification Code",
       html: `<p>Your OTP is: <strong>${otp}</strong></p>`,
@@ -299,7 +299,7 @@ app.post("/signup-user", async (req, res) => {
     await user.save();
 
     await transporter.sendMail({
-      from: "aliusmandata@gmail.com",
+      from: "usmanmehsud3@gmail.com",
       to: email,
       subject: "Your OTP Verification Code",
       html: `<p>Your OTP is: <strong>${otp}</strong></p>`,
@@ -604,7 +604,7 @@ app.put("/caseeditput/:id", async (req, res) => {
 
 
     await transporter.sendMail({
-      from: "aliusmandata@gmail.com",
+      from: "usmanmehsud3@gmail.com",
       to: updatedCase.useremail,
       subject: "Your Case Progress Update",
       html: `<p>Your case status is currently marked as ${updatedCase.status}.
@@ -624,13 +624,13 @@ app.post("/contact-with-admin", async (req, res) => {
   const { name, email, message } = req.body;
   try {
     console.log(email)
-    const user = await OnlyUser.findOne({ email:email })
-    const lawyer = await User.findOne({ email:email })
+    const user = await OnlyUser.findOne({ email: email })
+    const lawyer = await User.findOne({ email: email })
     console.log(user, lawyer)
     if (user) {
       await transporter.sendMail({
-        from: "aliusmandata@gmail.com",
-        to: "aliusmandata@gmail.com",
+        from: "usmanmehsud3@gmail.com",
+        to: "usmanmehsud3@gmail.com",
         subject: "Contact with admin",
         html: `<p>
       <strong>Dear Admin!</strong>
@@ -641,8 +641,8 @@ app.post("/contact-with-admin", async (req, res) => {
     }
     else if (lawyer) {
       await transporter.sendMail({
-        from: "aliusmandata@gmail.com",
-        to: "aliusmandata@gmail.com",
+        from: "usmanmehsud3@gmail.com",
+        to: "usmanmehsud3@gmail.com",
         subject: "Contact with admin",
         html: `<p>
       <strong>Dear Admin!</strong>

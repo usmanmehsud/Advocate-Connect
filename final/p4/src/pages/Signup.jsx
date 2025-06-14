@@ -55,11 +55,13 @@ const Signup = () => {
 
     const { email, password, gender, phone } = form;
     const formData = new FormData();
-    formData.append("image", image);
-    formData.append("email", email);
-    formData.append("password", password);
-    formData.append("gender", gender);
-    formData.append("phone", phone);
+ 
+  formData.append("username", form.username);
+  formData.append("email", form.email);
+  formData.append("password", form.password);
+  formData.append("gender", form.gender);
+  formData.append("phone", form.phone);
+  formData.append("image", image);
 
     if (!validatePassword(password)) {
       setError("Password must be at least 8 characters and include a special character.");
