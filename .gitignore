@@ -3,6 +3,8 @@
 
 # Ignore environment files
 **/.env
+backend/uploads/
+
 
 # Ignore build folders
 **/build/
