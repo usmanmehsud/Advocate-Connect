@@ -16,13 +16,20 @@ const OnlyUser = require('./models/OnlyUser');
 app.use(cors());
 app.use(express.json());
 
+
 // MongoDB Connection
-mongoose
-  .connect(
-    "mongodb://localhost/advconnect"
-  )
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.log("MongoDB error:", err));
+// const mongoose = require('mongoose');
+
+mongoose.connect(
+  'mongodb+srv://usmanfaridai230:waziristan@cluster0.fjbxco2.mongodb.net/advconnect?retryWrites=true&w=majority&appName=Cluster0',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+)
+.then(() => console.log("✅ MongoDB Atlas Connected"))
+.catch((err) => console.log("❌ MongoDB Connection Error:", err));
+
 
 
 
