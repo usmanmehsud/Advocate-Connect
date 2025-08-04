@@ -13,7 +13,7 @@ const ActiveCaseLawyer = () => {
         const fetchCases = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:5000/activecaselawyer/${userId}`
+                    `${process.env.REACT_APP_API_BASE_URL}/activecaselawyer/${userId}`
                 );
                 setCases(response.data);
             } catch (error) {

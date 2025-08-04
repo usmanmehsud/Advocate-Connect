@@ -15,6 +15,7 @@ const OnlyUser = require('./models/OnlyUser');
 
 app.use(cors());
 app.use(express.json());
+require("dotenv").config();
 
 
 // MongoDB Connection
@@ -32,7 +33,10 @@ mongoose.connect(
 
 
 
-
+app.use(cors({
+  origin: 'https://advocate-connect-two.vercel.app/', // 👈 apna Vercel domain lagao
+  credentials: true
+}));
 
 
 //Active Cases Schema & Model

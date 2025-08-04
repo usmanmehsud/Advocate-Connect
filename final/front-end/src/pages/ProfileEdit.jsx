@@ -26,7 +26,7 @@ const ProfileEdit = () => {
   const { id } = useParams(); // Get the lawyer ID from the URL parameters
   useEffect(() => {
     const getCurrentLawyer = async () => {
-      const selectedLawyer = await axios.get(`http://localhost:5000/lawyer/${id}`);
+      const selectedLawyer = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/lawyer/${id}`);
       console.log(selectedLawyer.data[0])
       if (selectedLawyer) setFormData(selectedLawyer.data[0])
       if (selectedLawyer) setLawyer(selectedLawyer.data[0])
@@ -69,7 +69,7 @@ const ProfileEdit = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/lawyer/${id}`, formData);
+      await axios.put(`${process.env.REACT_APP_API_BASE_URL}/lawyer/${id}`, formData);
       swal({
         title: "Success!",
         text: "User updated successfully!",

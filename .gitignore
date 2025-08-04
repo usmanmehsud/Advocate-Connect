@@ -20,3 +20,5 @@ backend/uploads/
 # Ignore temporary system files
 .DS_Store
 Thumbs.db
+.env
+
