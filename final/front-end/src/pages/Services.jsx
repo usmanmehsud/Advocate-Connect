@@ -15,7 +15,7 @@ const RatingStars = ({ lawyerId }) => {
       setRating(rate);
       const token = localStorage.getItem("token");
       await axios.post(
-        "`${process.env.REACT_APP_API_BASE_URL}/rate-lawyer",
+        `${process.env.REACT_APP_API_BASE_URL}/rate-lawyer`,
         { lawyerId, rating: rate },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -96,7 +96,7 @@ const Services = () => {
 
     const fetchLawyers = async () => {
       try {
-        const res = await axios.get("`${process.env.REACT_APP_API_BASE_URL}/lawyers");
+        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/lawyers`);
 
         setLawyers(res.data)
         setFilteredLawyers(res.data)

@@ -49,7 +49,7 @@ const Home = () => {
   useEffect(() => {
     const fetchLawyers = async () => {
       try {
-        const res = await axios.get("`${process.env.REACT_APP_API_BASE_URL}/lawyers");
+        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/lawyers`);
         setLawyers(res.data)
         const ratedLawyers = res.data;
         // console.log(ratedLawyers)
@@ -70,7 +70,7 @@ const Home = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await axios.get("`${process.env.REACT_APP_API_BASE_URL}/users");
+        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/users`);
         setUsers(res.data)
       } catch (err) {
         console.error("Failed to fetch users ", err);
@@ -82,7 +82,7 @@ const Home = () => {
   useEffect(() => {
     const fetchActiveCases = async () => {
       try {
-        const res = await axios.get("`${process.env.REACT_APP_API_BASE_URL}/activecases");
+        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/activecases`);
         setCases(res.data)
       } catch (err) {
         console.error("Failed to fetch active cases ", err);

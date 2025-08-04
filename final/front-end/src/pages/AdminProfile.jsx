@@ -80,7 +80,7 @@ const AdminProfile = () => {
     const { username, phone, age, qualification, gender, picture } = profileData;
 
     const res = await axios.post(
-      "`${process.env.REACT_APP_API_BASE_URL}/update-profile",
+      `${process.env.REACT_APP_API_BASE_URL}/update-profile`,
       { username, phone, age, qualification, gender, picture },
       { headers: { Authorization: `Bearer ${token}` } }
     );
