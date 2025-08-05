@@ -6,6 +6,23 @@ const nodemailer = require("nodemailer");
 const cors = require("cors");
 const app = express();
 
+const allowedOrigins = [
+  "https://advocate-connect-two.vercel.app",  // ✅ production
+  "http://localhost:5173"                     // ✅ local testing
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed for this origin"));
+    }
+  },
+  credentials: true
+}));
+
+
 const upload = require("./utils/multer"); // Just use the imported one
 const cloudinary = require("./utils/cloudinary");
 const fs = require("fs");
@@ -14,6 +31,9 @@ const User = require('./models/User');
 const OnlyUser = require('./models/OnlyUser');
 
 app.use(cors());
+
+
+
 app.use(express.json());
 require("dotenv").config();
 
@@ -33,10 +53,7 @@ mongoose.connect(
 
 
 
-app.use(cors({
-  origin: 'https://advocate-connect-two.vercel.app/', // 👈 apna Vercel domain lagao
-  credentials: true
-}));
+
 
 
 //Active Cases Schema & Model

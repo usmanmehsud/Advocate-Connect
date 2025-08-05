@@ -20,7 +20,7 @@ const LawyerEditPage = () => {
     useEffect(() => {
         const getCurrentLawyer = async () => {
 
-            const selectedLawyer = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/lawyerEditCases/${id}`);
+            const selectedLawyer = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/lawyerEditCases/${id}`);
             console.log(selectedLawyer.data)
             if (selectedLawyer) setFormData(selectedLawyer.data)
             if (selectedLawyer) setLawyer(selectedLawyer.data)
@@ -45,7 +45,7 @@ const LawyerEditPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`${process.env.REACT_APP_API_BASE_URL}/caseeditput/${id}`, formData);
+            await axios.put(`${import.meta.env.VITE_BACKEND_URL}/caseeditput/${id}`, formData);
             toast.success("User updated successfully!");
             navigate(`/activecaselawyer/${lawyer.lawyerId}`)
         } catch (error) {

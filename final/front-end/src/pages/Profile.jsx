@@ -16,7 +16,7 @@ const Profile = () => {
   useEffect(() => {
     const getCurrentLawyer = async () => {
       try {
-        const selectedLawyer = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/lawyer/${id}`);
+        const selectedLawyer = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/lawyer/${id}`);
         if (selectedLawyer && selectedLawyer.data.length > 0) {
           setLawyer(selectedLawyer.data[0]);
           setCurrentStatus(selectedLawyer.data[0].status);
@@ -32,7 +32,7 @@ const Profile = () => {
 
   const toggleStatus = async () => {
     try {
-      const res = await axios.put(`${process.env.REACT_APP_API_BASE_URL}/lawyer/status/${id}`);
+      const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/lawyer/status/${id}`);
       Swal.fire("Status Updated", `User is now ${res.data.status}`, "success");
       setCurrentStatus(res.data.status);
     } catch (err) {
@@ -45,7 +45,7 @@ const Profile = () => {
     console.log(item)
     try {
       
-      const response = await axios.put(`${process.env.REACT_APP_API_BASE_URL}/lawyerSpecializedCase/${id}`, {valueToRemove:item});
+      const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/lawyerSpecializedCase/${id}`, {valueToRemove:item});
       console.log(response.data)
       setLawyer(response.data.data)
       swal("Success!", "User updated successfully!", "success");

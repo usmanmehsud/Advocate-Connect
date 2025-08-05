@@ -74,7 +74,7 @@ const Signup = () => {
     }
 
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/signup`, formData, {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/signup`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -101,7 +101,7 @@ const Signup = () => {
     }
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/verify-otp`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: form.email, otp }),

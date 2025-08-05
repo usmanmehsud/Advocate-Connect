@@ -62,7 +62,7 @@ const SignupUser = () => {
     }
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/signup-user`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/signup-user`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -89,7 +89,7 @@ const SignupUser = () => {
     }
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/verify-user-otp`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/verify-user-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: form.email, otp }),

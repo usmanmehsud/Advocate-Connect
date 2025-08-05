@@ -15,7 +15,7 @@ const RatingStars = ({ lawyerId }) => {
       setRating(rate);
       const token = localStorage.getItem("token");
       await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/rate-lawyer`,
+        `${import.meta.env.VITE_BACKEND_URL}/rate-lawyer`,
         { lawyerId, rating: rate },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -72,7 +72,7 @@ const Services = () => {
     const loggedInUser = JSON.parse(localStorage.getItem("userProfile"));
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/book-lawyer/${loggedInUser._id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/book-lawyer/${loggedInUser._id}`,
         { lawyerId: lawyer_id }
       );
       toast.success("Lawyer Booked Successfully")
@@ -96,7 +96,7 @@ const Services = () => {
 
     const fetchLawyers = async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/lawyers`);
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/lawyers`);
 
         setLawyers(res.data)
         setFilteredLawyers(res.data)

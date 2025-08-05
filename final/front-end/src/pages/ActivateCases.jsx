@@ -12,7 +12,7 @@ const ActiveCases = () => {
     const fetchCases = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/activecasesuser/${userId}`
+          `${import.meta.env.VITE_BACKEND_URL}/activecasesuser/${userId}`
         );
         setCases(response.data);
       } catch (error) {
