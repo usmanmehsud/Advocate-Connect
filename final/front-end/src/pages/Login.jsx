@@ -30,6 +30,10 @@ const handleLogin = async (e) => {
   const email = form.email.trim().toLowerCase();
   const password = form.password.trim();
 
+  const apiUrl = import.meta.env.VITE_BACKEND_URL;
+console.log("✅ BACKEND URL:", apiUrl);
+
+
   try {
     const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/login`, {
       method: "POST",

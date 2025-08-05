@@ -6,6 +6,9 @@ const nodemailer = require("nodemailer");
 const cors = require("cors");
 const app = express();
 
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true }));
+
 const allowedOrigins = [
   "https://advocate-connect-two.vercel.app",  // ✅ production
   "http://localhost:5173"                     // ✅ local testing
@@ -21,6 +24,8 @@ app.use(cors({
   },
   credentials: true
 }));
+
+
 
 
 const upload = require("./utils/multer"); // Just use the imported one
@@ -40,16 +45,12 @@ require("dotenv").config();
 
 // MongoDB Connection
 // const mongoose = require('mongoose');
-
 mongoose.connect(
-  'mongodb+srv://usmanfaridai230:waziristan@cluster0.fjbxco2.mongodb.net/advconnect?retryWrites=true&w=majority&appName=Cluster0',
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
+  'mongodb+srv://usmanfaridai230:waziristan@cluster0.fjbxco2.mongodb.net/advconnect?retryWrites=true&w=majority&appName=Cluster0'
 )
 .then(() => console.log("✅ MongoDB Atlas Connected"))
 .catch((err) => console.log("❌ MongoDB Connection Error:", err));
+
 
 
 
