@@ -11,16 +11,15 @@ app.use(express.urlencoded({ extended: true }));
 app.options("*", cors()); // 👈 ADD THIS LINE
 
 const allowedOrigins = [
-  "http://localhost:5173", // Local
-  "https://advocate-connect-two.vercel.app", // Production
-  "https://advocate-connect.vercel.app", // (optional - another production)
+  "http://localhost:5173",
+  "https://advocate-connect.vercel.app",
+  "https://advocate-connect-git-master-usman-khans-projects-ab211341.vercel.app",
 ];
 
-// ✅ CORS Setup
+// ✅ CORS Middleware
 app.use(cors({
   origin: function (origin, callback) {
-    // For non-browser tools like Postman (no origin)
-    if (!origin) return callback(null, true);
+    if (!origin) return callback(null, true); // Postman, curl etc.
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     } else {
@@ -34,7 +33,8 @@ app.use(cors({
 
 // const streamifier = require("streamifier");
 const streamifier = require("streamifier");
-const multer = require("multer"); 
+// const multer = require("multer"); 
+const multer = require("multer");
 
 const upload = require("./utils/multer"); // Just use the imported one
 const cloudinary = require("./utils/cloudinary");
