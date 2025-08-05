@@ -162,6 +162,11 @@ Please ensure you are available and respond to them.</p>`,
   }
 });
 
+
+app.get("/test", (req, res) => {
+  res.send("✅ Railway backend working!");
+});
+
 const authenticateToken = (req, res, next) => {
   const token = req.header("Authorization")?.split(" ")[1]; // Extract token from 'Authorization: Bearer token'
 

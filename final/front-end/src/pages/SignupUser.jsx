@@ -60,6 +60,8 @@ const SignupUser = () => {
       setError("Please select a gender.");
       return;
     }
+    const apiUrl = import.meta.env.VITE_BACKEND_URL;
+  console.log("✅ BACKEND URL:", apiUrl);
 
     try {
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/signup-user`, {
