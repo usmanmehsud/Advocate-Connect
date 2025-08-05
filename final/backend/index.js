@@ -8,22 +8,24 @@ const app = express();
 
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
+app.options("*", cors()); // 👈 ADD THIS LINE
 
 const allowedOrigins = [
-  "https://advocate-connect-two.vercel.app",  // ✅ production
-  "http://localhost:5173"                     // ✅ local testing
+  "https://advocate-connect-two.vercel.app",  // ✅ Production
+  "http://localhost:5173"                     // ✅ Local testing
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
+      callback(null, true);  // ✅ Allow this origin
     } else {
-      callback(new Error("CORS not allowed for this origin"));
+      callback(new Error("CORS not allowed for this origin"));  // ❌ Block others
     }
   },
   credentials: true
 }));
+
 
 
 // const streamifier = require("streamifier");
