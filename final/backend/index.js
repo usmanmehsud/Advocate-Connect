@@ -10,22 +10,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.options("*", cors()); // 👈 ADD THIS LINE
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://advocate-connect.vercel.app",
-  "https://advocate-connect-git-master-usman-khans-projects-ab211341.vercel.app",
-];
-
-// ✅ CORS Middleware
+const cors = require('cors');
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true); // Postman, curl etc.
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      return callback(new Error("CORS not allowed from this origin"));
-    }
-  },
+  origin: ['https://advocate-connect-git-master-usman-khans-projects-ab211341.vercel.app'],
   credentials: true,
 }));
 
