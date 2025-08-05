@@ -10,9 +10,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.options("*", cors()); // 👈 ADD THIS LINE
 
-const cors = require('cors');
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://advocate-connect-git-master-usman-khans-projects-ab211341.vercel.app",
+  "https://advocate-connect-two.vercel.app",
+];
+
 app.use(cors({
-  origin: ['https://advocate-connect-git-master-usman-khans-projects-ab211341.vercel.app'],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
 }));
 
@@ -22,7 +33,7 @@ app.use(cors({
 const streamifier = require("streamifier");
 // const multer = require("multer"); 
 const multer = require("multer");
-
+app.use("/api/lawyer", lawyerRoutes);
 const upload = require("./utils/multer"); // Just use the imported one
 const cloudinary = require("./utils/cloudinary");
 // const fs = require("fs");
@@ -465,7 +476,7 @@ app.post("/update-profile", authenticateToken, async (req, res) => {
   res.json({ message: "Profile updated successfully", user });
 });
 
-app.get("/lawyers", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const lawyers = await User.find({ role: "lawyer" });
     res.json(lawyers);
@@ -474,20 +485,18 @@ app.get("/lawyers", async (req, res) => {
   }
 });
 
-app.get("/lawyer/:id", async (req, res) => {
-  const id = req.params.id;
+// ✅ Get single lawyer by ID
+router.get("/:id", async (req, res) => {
   try {
-    const lawyers = await User.find({ _id: id });
-    res.json(lawyers);
+    const lawyer = await User.findById(req.params.id);
+    res.json(lawyer);
   } catch (err) {
-    res.status(500).json({ message: "Failed to fetch lawyers" });
+    res.status(500).json({ message: "Failed to fetch lawyer" });
   }
 });
 
-// Update user details by ID
-
-app.put("/lawyer/:id", async (req, res) => {
-  // console.log(req.body);
+// ✅ Update lawyer info
+router.put("/:id", async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
@@ -518,14 +527,12 @@ app.put("/lawyer/:id", async (req, res) => {
   }
 });
 
-app.put("/lawyer/status/:id", async (req, res) => {
-  const { id } = req.params;
-
+// ✅ Toggle lawyer status
+router.put("/status/:id", async (req, res) => {
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // Toggle status
     user.status = user.status === "available" ? "inactive" : "available";
     await user.save();
 
