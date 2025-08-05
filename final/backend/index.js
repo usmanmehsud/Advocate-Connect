@@ -19,7 +19,7 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (e.g., Postman)
+    // Allow requests with no origin (e.g., Postman, curl)
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
@@ -29,6 +29,7 @@ app.use(cors({
   },
   credentials: true,
 }));
+
 
 
 
@@ -45,7 +46,7 @@ const cloudinary = require("./utils/cloudinary");
 const User = require('./models/User');
 const OnlyUser = require('./models/OnlyUser');
 
-app.use(cors());
+// app.use(cors());
 
 
 
