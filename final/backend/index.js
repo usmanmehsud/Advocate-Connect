@@ -10,13 +10,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-const corsOptions = {
-  origin: ["https://advocate-connect-git-master-usman-khans-projects-ab211341.vercel.app"], // 👈 Add your frontend domain here
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  credentials: true,
-};
+// const cors = require("cors");
 
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true, // if using cookies/sessions
+  })
+);
+
 
 
 
