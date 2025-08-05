@@ -248,7 +248,7 @@ app.post("/rate-lawyer", authenticateToken, async (req, res) => {
 // Pending OTP Users (Temp Store)
 const pendingUsers = new Map();
 // Signup layer Route (Sends OTP)
-const streamifier = require("streamifier"); // Make sure it's imported at the top
+// const streamifier = require("streamifier"); // Make sure it's imported at the top
 
 // Signup layer Route (Sends OTP)
 app.post("/signup", upload.single("image"), async (req, res) => {
