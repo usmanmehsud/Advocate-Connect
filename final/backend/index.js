@@ -18,6 +18,11 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+app.use(cors(corsOptions));
+
+// Optional, lekin kuch cases mein zaroori hota hai
+app.options("*", cors(corsOptions));
+
 
 const streamifier = require("streamifier");
 const multer = require("multer"); 
