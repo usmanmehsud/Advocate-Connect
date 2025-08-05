@@ -6,20 +6,17 @@ const nodemailer = require("nodemailer");
 const cors = require("cors");
 const app = express();
 
-app.use(express.json()); 
-app.use(express.urlencoded({ extended: true }));
 
 
 // const cors = require("cors");
 
 const allowedOrigins = [
-  "https://advocate-connect-git-master-usman-khans-projects-ab211341.vercel.app",
-  "https://advocate-connect.vercel.app" // optional - future production
+  "https://advocate-connect.vercel.app",
+  "https://advocate-connect-git-master-usman-khans-projects-ab211341.vercel.app"
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (e.g., Postman, curl)
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
@@ -31,7 +28,8 @@ app.use(cors({
 }));
 
 
-
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true }));
 
 
 
