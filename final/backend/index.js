@@ -11,19 +11,23 @@ app.use(express.urlencoded({ extended: true }));
 app.options("*", cors()); // 👈 ADD THIS LINE
 
 const allowedOrigins = [
-  "https://advocate-connect-two.vercel.app",  // ✅ Production
-  "http://localhost:5173"                     // ✅ Local testing
+  "http://localhost:5173", // Local
+  "https://advocate-connect-two.vercel.app", // Production
+  "https://advocate-connect.vercel.app", // (optional - another production)
 ];
 
+// ✅ CORS Setup
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);  // ✅ Allow this origin
+    // For non-browser tools like Postman (no origin)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
     } else {
-      callback(new Error("CORS not allowed for this origin"));  // ❌ Block others
+      return callback(new Error("CORS not allowed from this origin"));
     }
   },
-  credentials: true
+  credentials: true,
 }));
 
 
