@@ -8,12 +8,10 @@ const app = express();
 
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
-app.options("*", cors()); // 👈 ADD THIS LINE
 
 const allowedOrigins = [
-  "http://localhost:5173",
-  "https://advocate-connect-git-master-usman-khans-projects-ab211341.vercel.app",
-  "https://advocate-connect-two.vercel.app",
+  "https://advocate-connect-two.vercel.app",  // ✅ production
+  "http://localhost:5173"                     // ✅ local testing
 ];
 
 app.use(cors({
@@ -21,19 +19,16 @@ app.use(cors({
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error("Not allowed by CORS"));
+      callback(new Error("CORS not allowed for this origin"));
     }
   },
-  credentials: true,
+  credentials: true
 }));
 
 
-
-// const streamifier = require("streamifier");
 const streamifier = require("streamifier");
-// const multer = require("multer"); 
-const multer = require("multer");
-app.use("/api/lawyer", lawyerRoutes);
+const multer = require("multer"); 
+
 const upload = require("./utils/multer"); // Just use the imported one
 const cloudinary = require("./utils/cloudinary");
 // const fs = require("fs");
@@ -253,7 +248,7 @@ app.post("/rate-lawyer", authenticateToken, async (req, res) => {
 // Pending OTP Users (Temp Store)
 const pendingUsers = new Map();
 // Signup layer Route (Sends OTP)
-// const streamifier = require("streamifier"); // Make sure it's imported at the top
+const streamifier = require("streamifier"); // Make sure it's imported at the top
 
 // Signup layer Route (Sends OTP)
 app.post("/signup", upload.single("image"), async (req, res) => {
@@ -476,7 +471,7 @@ app.post("/update-profile", authenticateToken, async (req, res) => {
   res.json({ message: "Profile updated successfully", user });
 });
 
-router.get("/", async (req, res) => {
+app.get("/lawyers", async (req, res) => {
   try {
     const lawyers = await User.find({ role: "lawyer" });
     res.json(lawyers);
@@ -485,18 +480,20 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ✅ Get single lawyer by ID
-router.get("/:id", async (req, res) => {
+app.get("/lawyer/:id", async (req, res) => {
+  const id = req.params.id;
   try {
-    const lawyer = await User.findById(req.params.id);
-    res.json(lawyer);
+    const lawyers = await User.find({ _id: id });
+    res.json(lawyers);
   } catch (err) {
-    res.status(500).json({ message: "Failed to fetch lawyer" });
+    res.status(500).json({ message: "Failed to fetch lawyers" });
   }
 });
 
-// ✅ Update lawyer info
-router.put("/:id", async (req, res) => {
+// Update user details by ID
+
+app.put("/lawyer/:id", async (req, res) => {
+  // console.log(req.body);
   try {
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
@@ -527,12 +524,14 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// ✅ Toggle lawyer status
-router.put("/status/:id", async (req, res) => {
+app.put("/lawyer/status/:id", async (req, res) => {
+  const { id } = req.params;
+
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
+    // Toggle status
     user.status = user.status === "available" ? "inactive" : "available";
     await user.save();
 
