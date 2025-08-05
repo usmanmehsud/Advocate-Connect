@@ -16,7 +16,7 @@ const Signup = () => {
     password: "",
     gender: "",
     role: initialRole,
-    phone: "", // Added phone to the form state
+    phone: "",
   });
 
   const [otp, setOtp] = useState("");
@@ -49,19 +49,15 @@ const Signup = () => {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
   const handleSignup = async (e) => {
     e.preventDefault();
     if (!image) return alert("Please select an image");
 
-    const { email, password, gender, phone } = form;
-    const formData = new FormData();
- 
-  formData.append("username", form.username);
-  formData.append("email", form.email);
-  formData.append("password", form.password);
-  formData.append("gender", form.gender);
-  formData.append("phone", form.phone);
-  formData.append("image", image);
+    const { email, password, gender } = form;
 
     if (!validatePassword(password)) {
       setError("Password must be at least 8 characters and include a special character.");
@@ -74,20 +70,27 @@ const Signup = () => {
     }
 
     try {
+      const formData = new FormData();
+      formData.append("username", form.username);
+      formData.append("email", form.email);
+      formData.append("password", form.password);
+      formData.append("gender", form.gender);
+      formData.append("phone", form.phone);
+      formData.append("role", form.role);
+      formData.append("image", image);
+
       const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/signup`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      console.log(res.data);
-      if (res.status !== 200) {
+      if (res.status === 200) {
+        setIsOtpSent(true);
+        Swal.fire("OTP Sent", "Check your email for the OTP.", "info");
+      } else {
         setError(res.data.message || "Signup failed.");
-        return;
       }
-
-      setIsOtpSent(true);
-      Swal.fire("OTP Sent", "Check your email for the OTP.", "info");
     } catch (err) {
       console.error(err);
       setError("Something went wrong. Try again.");
@@ -122,88 +125,85 @@ const Signup = () => {
         }
       });
     } catch (err) {
+      console.error(err);
       setError("Something went wrong. Try again.");
     }
   };
 
-  const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
-  };
   return (
     <div className={`signup ${darkMode ? "dark" : ""}`}>
-
-      <form className="signup-form" onSubmit={isOtpSent ? (e) => { e.preventDefault(); handleVerifyOtp(); } : handleSignup}>
+      <form
+        className="signup-form"
+        onSubmit={isOtpSent ? (e) => { e.preventDefault(); handleVerifyOtp(); } : handleSignup}
+      >
         <h2 className="you">Signup Page</h2>
 
         {!isOtpSent && (
           <>
             <div className="form-columns">
-  {/* Left Column: Username, Email, Password */}
-  <div className="form-column">
-    <input
-      className="in"
-      type="text"
-      name="username"
-      placeholder="Username"
-      value={form.username}
-      onChange={handleChange}
-      required
-    />
-    <input
-      className="in"
-      type="email"
-      name="email"
-      placeholder="Email"
-      value={form.email}
-      onChange={handleChange}
-      required
-    />
-    <input
-      className="in"
-      type="password"
-      name="password"
-      placeholder="Password"
-      value={form.password}
-      onChange={handleChange}
-      required
-    />
-  </div>
+              <div className="form-column">
+                <input
+                  className="in"
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  value={form.username}
+                  onChange={handleChange}
+                  required
+                />
+                <input
+                  className="in"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                />
+                <input
+                  className="in"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={form.password}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-  {/* Right Column: Gender, Phone, Image */}
-  <div className="form-column">
-    <select
-      className="sel"
-      name="gender"
-      value={form.gender}
-      onChange={handleChange}
-      required
-    >
-      <option value="">Select Gender</option>
-      <option>Male</option>
-      <option>Female</option>
-      <option>Custom</option>
-    </select>
+              <div className="form-column">
+                <select
+                  className="sel"
+                  name="gender"
+                  value={form.gender}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select Gender</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                  <option>Custom</option>
+                </select>
 
-    <input
-      className="in"
-      type="text"
-      name="phone"
-      placeholder="Phone"
-      value={form.phone}
-      onChange={handleChange}
-      required
-    />
+                <input
+                  className="in"
+                  type="text"
+                  name="phone"
+                  placeholder="Phone"
+                  value={form.phone}
+                  onChange={handleChange}
+                  required
+                />
 
-    <input
-      className="in"
-      type="file"
-      accept="image/*"
-      onChange={handleImageChange}
-      required
-    />
-  </div>
-</div>
-
+                <input
+                  className="in"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  required
+                />
+              </div>
+            </div>
             <br />
           </>
         )}
@@ -227,13 +227,12 @@ const Signup = () => {
       </form>
 
       <div className="login-link">
-        <p id="new234">If you already have an account, <Link to="/login">go to login page</Link>.</p>
+        <p id="new234">
+          If you already have an account, <Link to="/login">go to login page</Link>.
+        </p>
       </div>
     </div>
   );
 };
 
 export default Signup;
-
-
-

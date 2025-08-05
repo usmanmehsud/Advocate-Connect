@@ -26,11 +26,13 @@ app.use(cors({
 }));
 
 
-
+// const streamifier = require("streamifier");
+const streamifier = require("streamifier");
+const multer = require("multer"); 
 
 const upload = require("./utils/multer"); // Just use the imported one
 const cloudinary = require("./utils/cloudinary");
-const fs = require("fs");
+// const fs = require("fs");
 
 const User = require('./models/User');
 const OnlyUser = require('./models/OnlyUser');
@@ -247,26 +249,34 @@ app.post("/rate-lawyer", authenticateToken, async (req, res) => {
 // Pending OTP Users (Temp Store)
 const pendingUsers = new Map();
 // Signup layer Route (Sends OTP)
-app.post("/signup", upload.single("image"), async (req, res) => {
-  // console.log(req.body)
+// const streamifier = require("streamifier"); // Make sure it's imported at the top
 
-  const localPath = req.file.path;
+// Signup layer Route (Sends OTP)
+app.post("/signup", upload.single("image"), async (req, res) => {
   const projectName = req.body.projectName || "lawyer";
 
-  const { username, email, password, gender, cnic, role, phone } = req.body;
+  function streamUpload(req) {
+    return new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: projectName },
+        (error, result) => {
+          if (result) resolve(result);
+          else reject(error);
+        }
+      );
+      streamifier.createReadStream(req.file.buffer).pipe(stream);
+    });
+  }
 
   try {
+    const cloudinaryResult = await streamUpload(req); // ✅ Use buffer
+
+    const { username, email, password, gender, cnic, role, phone } = req.body;
+
     const exists = await User.findOne({ email });
     if (exists)
       return res.status(400).json({ message: "Email already exists" });
 
-    // Upload to Cloudinary folder
-    const cloudinaryResult = await cloudinary.uploader.upload(localPath, {
-      folder: `/${projectName}`,
-    });
-    console.log(cloudinaryResult.secure_url);
-    fs.unlinkSync(localPath);
-    // Check if phone number starts with 0 and replace it with +92
     const phoneWithCountryCode = phone.startsWith("0")
       ? `+92${phone.slice(1)}`
       : phone;
@@ -280,13 +290,12 @@ app.post("/signup", upload.single("image"), async (req, res) => {
       image: cloudinaryResult.secure_url,
       password: hashedPassword,
       gender,
-      phone: phoneWithCountryCode, // Store phone with country code
+      phone: phoneWithCountryCode,
       cnic,
       role: "lawyer",
       otp: otp,
       expiresAt: Date.now() + 10 * 60 * 1000,
     });
-    // await user.save()
 
     await transporter.sendMail({
       from: "usmanmehsud3@gmail.com",
@@ -294,12 +303,14 @@ app.post("/signup", upload.single("image"), async (req, res) => {
       subject: "Your OTP Verification Code",
       html: `<p>Your OTP is: <strong>${otp}</strong></p>`,
     });
+
     res.status(200).json({ message: "OTP sent to your email." });
   } catch (err) {
     console.error("Signup Error:", err);
     res.status(500).json({ message: "Signup failed", error: err.message });
   }
 });
+
 
 
 // Signup layer Route (Sends OTP)
