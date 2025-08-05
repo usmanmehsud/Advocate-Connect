@@ -14,18 +14,20 @@ app.use(express.urlencoded({ extended: true }));
 
 const allowedOrigins = [
   "https://advocate-connect-git-master-usman-khans-projects-ab211341.vercel.app",
-  "https://advocate-connect.vercel.app"
+  "https://advocate-connect.vercel.app" // optional - future production
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
+    // Allow requests with no origin (e.g., Postman)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
     } else {
-      callback(new Error("Not allowed by CORS"));
+      return callback(new Error("Not allowed by CORS"));
     }
   },
-  credentials: true
+  credentials: true,
 }));
 
 
