@@ -9,21 +9,14 @@ const app = express();
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 
-const allowedOrigins = [
-  "https://advocate-connect-two.vercel.app",  // ✅ production
-  "http://localhost:5173"                     // ✅ local testing
-];
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("CORS not allowed for this origin"));
-    }
-  },
-  credentials: true
-}));
+const corsOptions = {
+  origin: ["https://advocate-connect-git-master-usman-khans-projects-ab211341.vercel.app"], // 👈 Add your frontend domain here
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 
 const streamifier = require("streamifier");
