@@ -4,13 +4,20 @@
   box-sizing: border-box;
 }
 
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f7f7f7; 
+  color: #333;
+  line-height: 1.6;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
 
 
 .page-container {
   display: flex;
   flex-direction: column;
   transition: background-color 0.5s ease; 
-  margin-top: 5rem;
+  
 }
 
 .header {

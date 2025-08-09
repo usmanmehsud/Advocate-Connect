@@ -3,9 +3,7 @@
   display: block;
 }
 
-.home{
-  background-image: linear-gradient(935deg ,white , rgb(178, 224, 242));
-}
+
 
 .headerhome{
   min-height: 100vh;
@@ -214,7 +212,9 @@
   padding: 4rem 2rem;
   text-align: center;
 }
+.testimonials{
 
+}
 .practice-areas {
   background-color: #101418;
   color: #ccc;

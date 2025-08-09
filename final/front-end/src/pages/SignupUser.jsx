@@ -60,11 +60,9 @@ const SignupUser = () => {
       setError("Please select a gender.");
       return;
     }
-    const apiUrl = import.meta.env.VITE_BACKEND_URL;
-  console.log("✅ BACKEND URL:", apiUrl);
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/signup-user`, {
+      const res = await fetch("http://localhost:5000/signup-user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -91,7 +89,7 @@ const SignupUser = () => {
     }
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/verify-user-otp`, {
+      const res = await fetch("http://localhost:5000/verify-user-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: form.email, otp }),

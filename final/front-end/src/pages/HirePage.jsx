@@ -13,7 +13,7 @@ const HirePage = () => {
 
     const fetchLawyers = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/lawyers`);
+        const res = await axios.get("http://localhost:5000/lawyers");
         setLawyers(res.data);
       } catch (err) {
         console.error("Failed to fetch lawyers", err);

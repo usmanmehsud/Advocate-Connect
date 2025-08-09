@@ -3,7 +3,7 @@ import Footer from "./Footer";
 import FeatureSlider from "./FeatureSlider";
 import "../styles/home.css";
 import Navbar from "../Components/Navbar";
-import { Link, useNavigate } from "react-router-dom"; // At the top
+import { useNavigate } from "react-router-dom"; // At the top
 import { isTokenExpired } from "../utility/auth";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
@@ -11,9 +11,6 @@ import { useLocation } from "react-router-dom";
 const Home = () => {
   const navigate = useNavigate();
   const [ratingLawers, setRatingLawyers] = useState([]);
-  const [lawyers, setLawyers] = useState([]);
-  const [users, setUsers] = useState([]);
-  const [cases, setCases] = useState([]);
 
   const navigateToService = () => {
     if (isTokenExpired()) {
@@ -49,15 +46,13 @@ const Home = () => {
   useEffect(() => {
     const fetchLawyers = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/lawyers`);
-        setLawyers(res.data)
+        const res = await axios.get("http://localhost:5000/lawyers");
         const ratedLawyers = res.data;
-        // console.log(ratedLawyers)
         const highRatedLawyers = ratedLawyers
-          .filter(item => item.averageRating) // only those who have a rating
-          .sort((a, b) => b.averageRating - a.averageRating) // sort descending
-          .sort((a, b) => b.ratings.length - a.ratings.length) // sort descending
-          .slice(0, 3); // pick top 3
+  .filter(item => item.averageRating) // only those who have a rating
+  .sort((a, b) => b.averageRating - a.averageRating) // sort descending
+  // .sort((a, b) => b.ratings - a.ratings) // sort descending
+  .slice(0, 3); // pick top 3
         setRatingLawyers(highRatedLawyers);
       } catch (err) {
         console.error("Failed to fetch high rated lawyers lawyer's ", err);
@@ -67,29 +62,6 @@ const Home = () => {
   }, []);
   // console.log(ratingLawers)
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users`);
-        setUsers(res.data)
-      } catch (err) {
-        console.error("Failed to fetch users ", err);
-      }
-    };
-    fetchUsers();
-  }, []);
-  // get active cases
-  useEffect(() => {
-    const fetchActiveCases = async () => {
-      try {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/activecases`);
-        setCases(res.data)
-      } catch (err) {
-        console.error("Failed to fetch active cases ", err);
-      }
-    };
-    fetchActiveCases();
-  }, []);
   const images = [
     "https://media.istockphoto.com/id/1155363752/photo/legal-counsel-presents-to-the-client-a-signed-contract-with-gavel-and-legal-law-justice-and.jpg?s=612x612&w=0&k=20&c=sXYi5WSO6XLFgpFDdO0o9fNYUqMm7C3YIiFMTa5LYoY=",
     "https://media.istockphoto.com/id/1598910684/photo/judge-gavel-deciding-on-marriage-divorce-signing-papers-lawyer-concept.jpg?s=612x612&w=0&k=20&c=AGVLs6YTCHNrd42jtCDISV1MyWK6WVeoB0L4sNIM6qM=",
@@ -107,7 +79,7 @@ const Home = () => {
   }, []);
   return (
     <>
-
+     
 
       <div className="home">
         <div className="headerhome">
@@ -196,24 +168,6 @@ const Home = () => {
           </div>
         </header>
 
-
-        <section className="testimonials">
-          <h2>Our Progress</h2>
-          <div className="testimonial-row" >
-            <div className="testimonial" style={{ backgroundColor: "#bdd6e0" }}>
-              <h1>Current Lawyers: {lawyers.length}</h1>
-            </div>
-            <div className="testimonial" style={{ backgroundColor: "#bdd6e0" }}>
-              <h1>Current Users: {users.length}</h1>
-
-            </div>
-            <div className="testimonial" style={{ backgroundColor: "#bdd6e0" }}>
-              <h1>Active Cases: {cases.length}</h1>
-
-            </div>
-          </div>
-        </section>
-
         <section className="about">
           <div className="about-content">
             <div className="about-text">
@@ -247,8 +201,7 @@ const Home = () => {
             <div
               key={lawyer._id}
               className="advocate-card"
-              style={{ width: "32%", cursor: "pointer" }}
-              onClick={() => { navigate(`/profile/${lawyer._id}`) }}
+              style={{ width: "32%" }}
             >
               {/* LEFT SIDE */}
               <div className="lawyer-info-left">
@@ -282,12 +235,7 @@ const Home = () => {
                   </p>
 
                   <div className="tags">
-                    <span className="tag" >
-                      {lawyer.specializedIn ? lawyer.specializedIn.map((item, idx) => {
-                        return <span onClick={() => { deleteCaseType(item) }} key={idx} style={{ padding: "3px 8px", borderRadius:"12px"}}>{item}<br/></span>
-                      }) : "Legal Professional"
-                      }
-                    </span>
+                    <span className="tag">{lawyer.specializedIn || "Legal Professional"}</span>
                   </div>
 
                   <p>Email: {lawyer.email}</p>

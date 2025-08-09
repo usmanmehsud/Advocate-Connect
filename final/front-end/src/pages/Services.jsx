@@ -15,7 +15,7 @@ const RatingStars = ({ lawyerId }) => {
       setRating(rate);
       const token = localStorage.getItem("token");
       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/rate-lawyer`,
+        "http://localhost:5000/rate-lawyer",
         { lawyerId, rating: rate },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -72,7 +72,7 @@ const Services = () => {
     const loggedInUser = JSON.parse(localStorage.getItem("userProfile"));
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/book-lawyer/${loggedInUser._id}`,
+        `http://localhost:5000/book-lawyer/${loggedInUser._id}`,
         { lawyerId: lawyer_id }
       );
       toast.success("Lawyer Booked Successfully")
@@ -96,7 +96,7 @@ const Services = () => {
 
     const fetchLawyers = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/lawyers`);
+        const res = await axios.get("http://localhost:5000/lawyers");
 
         setLawyers(res.data)
         setFilteredLawyers(res.data)
@@ -238,13 +238,8 @@ const Services = () => {
                 </p>
 
                 <div className="tags">
-                    <span className="tag" >
-                      {lawyer.specializedIn ? lawyer.specializedIn.map((item, idx) => {
-                        return <span onClick={() => { deleteCaseType(item) }} key={idx} style={{ padding: "3px 8px", borderRadius:"12px"}}>{item}</span>
-                      }) : "Legal Professional"
-                      }
-                    </span>
-                  </div>
+                  <span className="tag">{lawyer.specializedIn|| "Legal Professional" }</span>
+                </div>
 
                 <p>Email: {lawyer.email}</p>
                 <p>
@@ -261,7 +256,7 @@ const Services = () => {
                   {loggedInUserRole === "user" && loggedInUserId !== lawyer._id && (
                     <> <button
                         className="message-btn"
-                        style={{ backgroundColor: "#f39c12", color: "white" }}
+                        style={{ backgroundColor: "blue", color: "white" }}
                         onClick={() => {navigate(`/profile/${lawyer._id}`)}}
                       >
                         View as

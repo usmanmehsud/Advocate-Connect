@@ -42,7 +42,7 @@ console.log(email)
     }
    
     try {
-  const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/contact-with-admin`, {
+  const response = await axios.post(`http://localhost:5000/contact-with-admin`, {
     name,
     email,
     message,
@@ -77,17 +77,17 @@ console.log(email)
       <ul className="contact-details">
         <li>
           <span className="icon">📞</span>
-          <a href="tel:4843242400">03045668984</a>
+          <a href="tel:4843242400">484.324.2400</a>
         </li>
         <li>
           <span className="icon">✉️</span>
-          <a href="mailto:usmanmehsud3@gmail.com">usmanmehsud3@gmail.com</a>
+          <a href="mailto:info@mediaproper.com">info@mediaproper.com</a>
         </li>
         <li>
           <span className="icon">📍</span>
           <address>
-            Faislabad Punjab<br />
-            Pakistan
+            15 West 3rd St.<br />
+            Media, Pa. 19063
           </address>
         </li>
       </ul>

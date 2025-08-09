@@ -1,15 +1,13 @@
 .contact-page {
   display: flex;
   justify-content: center;
-  background-image: linear-gradient(935deg ,white , rgb(178, 224, 242));
-  padding: 4rem;
+  padding: 40px 20px;
   background-color: #fff;
   font-family: 'Segoe UI', sans-serif;
 }
 
 .contact-form-container {
   max-width: 1000px;
-  margin-top: 1rem;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;

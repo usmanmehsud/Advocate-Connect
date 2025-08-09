@@ -4,8 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import "../styles/UserEditForm.css";
 import axios from "axios"
 import swal from 'sweetalert';
-import { toast } from "react-toastify";
-
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
@@ -26,7 +24,7 @@ const ProfileEdit = () => {
   const { id } = useParams(); // Get the lawyer ID from the URL parameters
   useEffect(() => {
     const getCurrentLawyer = async () => {
-      const selectedLawyer = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/lawyer/${id}`);
+      const selectedLawyer = await axios.get(`http://localhost:5000/lawyer/${id}`);
       console.log(selectedLawyer.data[0])
       if (selectedLawyer) setFormData(selectedLawyer.data[0])
       if (selectedLawyer) setLawyer(selectedLawyer.data[0])
@@ -46,30 +44,11 @@ const ProfileEdit = () => {
       [name]: value,
     }));
   };
-  const handleChangeSpecialized = (e) => {
-    console.log(lawyer.specializedIn)
-    if((lawyer?.specializedIn).length>2){
-
-      toast.warn("Only 3 allowed delete anyone from profile")
-
-      return
-    }
-    const { name, value } = e.target;
-    
-    formData.specializedIn.push(value),
-  
-     
-    console.log(formData)
-  };
-
-  
-
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`${import.meta.env.VITE_BACKEND_URL}/lawyer/${id}`, formData);
+      await axios.put(`http://localhost:5000/lawyer/${id}`, formData);
       swal({
         title: "Success!",
         text: "User updated successfully!",
@@ -107,7 +86,7 @@ const ProfileEdit = () => {
         <input name="experience" type="number" value={formData.experience} onChange={handleChange} placeholder="Experience (years)" required />
         <input name="qualification" type="text" value={formData.qualification} onChange={handleChange} placeholder="Higher Qualification" required />
         <input name="totalCases" type="number" value={formData.totalCases} onChange={handleChange} placeholder="Total Cases" required />
-        <select name="specializedIn" value={formData.specializedIn[0]} onChange={handleChangeSpecialized} required>
+        <select name="specializedIn" value={formData.specializedIn} onChange={handleChange} required>
           <option value="criminal law">Criminal Law</option>
           <option value="family law">Family Law</option>
           <option value="property law">Property Law</option>
@@ -126,9 +105,8 @@ const ProfileEdit = () => {
           <option value="human rights law">Human Rights Law</option>
           <option value="international law">International Law</option>
         </select>
-        
         {/* <input name="specializedIn" value={formData.specializedIn} onChange={handleChange} placeholder="Specialized In" /> */}
-        <input name="address" value={formData.address} onChange={handleChange} placeholder="Enter Your City" required />
+        <input name="address" value={formData.address} onChange={handleChange} placeholder="Enter Your Address" required />
 
         <button type="submit">Save it</button>
       </form>

@@ -6,66 +6,22 @@ const nodemailer = require("nodemailer");
 const cors = require("cors");
 const app = express();
 
-
-
-// const cors = require("cors");
-
-const allowedOrigins = [
-  "https://advocate-connect.vercel.app",
-  "https://advocate-connect-git-master-usman-khans-projects-ab211341.vercel.app"
-];
-
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      return callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
-}));
-
-
-app.use(express.json()); 
-app.use(express.urlencoded({ extended: true }));
-
-
-
-
-const streamifier = require("streamifier");
-const multer = require("multer"); 
-
 const upload = require("./utils/multer"); // Just use the imported one
 const cloudinary = require("./utils/cloudinary");
-// const fs = require("fs");
+const fs = require("fs");
 
 const User = require('./models/User');
 const OnlyUser = require('./models/OnlyUser');
 
-// app.use(cors());
-
-
-
+app.use(cors());
 app.use(express.json());
-require("dotenv").config();
-
 
 // MongoDB Connection
-// const mongoose = require('mongoose');
-mongoose.connect(
-  'mongodb+srv://usmanfaridai230:waziristan@cluster0.fjbxco2.mongodb.net/advconnect?retryWrites=true&w=majority&appName=Cluster0'
-)
-.then(() => console.log("✅ MongoDB Atlas Connected"))
-.catch((err) => console.log("❌ MongoDB Connection Error:", err));
-
-
-
-
-
-
-
+// 
+mongoose
+  .connect("mongodb://localhost:27017/lawyerHiring")
+  .then(() => console.log("✅ MongoDB Connected"))
+  .catch((err) => console.error("❌ MongoDB Connection Failed:", err));
 //Active Cases Schema & Model
 const activeCasesSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "OnlyUser" },
@@ -81,10 +37,10 @@ const activeCasesSchema = new mongoose.Schema({
   updatesincases: String,
   status: String,
   averageRating: Number,
-  // ratings: {
-  //   type: [Number], // array of numbers
-  //   default: []
-  // },
+  ratings: {
+    type: [Number], // array of numbers
+    default: []
+  },
   image: String,
 });
 
@@ -103,7 +59,6 @@ app.post("/book-lawyer/:id", async (req, res) => {
 
     if (existsLawyer && existsUser) {
       const userCases = await ActiveCases.find({ lawyerId: lawyerId });
-      console.log(userCases)
       if (!userCases) {
         const booklawyer = await ActiveCases.create({
           userId: userId,
@@ -115,7 +70,7 @@ app.post("/book-lawyer/:id", async (req, res) => {
           lawyerphone: existsLawyer.phone,
           lawyeremail: existsLawyer.email,
           averageRating: existsLawyer.averageRating,
-          // ratings: existsLawyer.ratings,
+          ratings: existsLawyer.ratings,
         });
 
         await transporter.sendMail({
@@ -131,7 +86,7 @@ Please ensure you are available and respond to them.</p>`,
         res.status(200).json({ message: "lawyer Booked Successfuly" });
       }
       const result = userCases.filter(item => item.userId.equals(userId));
-      console.log("Results" + result)
+      console.log(result)
       if (!result[0]) {
         const booklawyer = await ActiveCases.create({
           userId: userId,
@@ -143,7 +98,7 @@ Please ensure you are available and respond to them.</p>`,
           lawyerphone: existsLawyer.phone,
           lawyeremail: existsLawyer.email,
           averageRating: existsLawyer.averageRating,
-          // ratings: existsLawyer.ratings,
+          ratings: existsLawyer.ratings,
         });
 
         await transporter.sendMail({
@@ -172,11 +127,6 @@ Please ensure you are available and respond to them.</p>`,
   }
 });
 
-
-app.get("/test", (req, res) => {
-  res.send("✅ Railway backend working!");
-});
-
 const authenticateToken = (req, res, next) => {
   const token = req.header("Authorization")?.split(" ")[1]; // Extract token from 'Authorization: Bearer token'
 
@@ -199,7 +149,7 @@ const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: "usmanmehsud3@gmail.com",
-    pass: "sukq klyd ksjn ctkx", // App password
+    pass: "tlyb pwbh katr pbbg", // App password
   },
 });
 
@@ -256,34 +206,26 @@ app.post("/rate-lawyer", authenticateToken, async (req, res) => {
 // Pending OTP Users (Temp Store)
 const pendingUsers = new Map();
 // Signup layer Route (Sends OTP)
-// const streamifier = require("streamifier"); // Make sure it's imported at the top
-
-// Signup layer Route (Sends OTP)
 app.post("/signup", upload.single("image"), async (req, res) => {
+  // console.log(req.body)
+
+  const localPath = req.file.path;
   const projectName = req.body.projectName || "lawyer";
 
-  function streamUpload(req) {
-    return new Promise((resolve, reject) => {
-      const stream = cloudinary.uploader.upload_stream(
-        { folder: projectName },
-        (error, result) => {
-          if (result) resolve(result);
-          else reject(error);
-        }
-      );
-      streamifier.createReadStream(req.file.buffer).pipe(stream);
-    });
-  }
+  const { username, email, password, gender, cnic, role, phone } = req.body;
 
   try {
-    const cloudinaryResult = await streamUpload(req); // ✅ Use buffer
-
-    const { username, email, password, gender, cnic, role, phone } = req.body;
-
     const exists = await User.findOne({ email });
     if (exists)
       return res.status(400).json({ message: "Email already exists" });
 
+    // Upload to Cloudinary folder
+    const cloudinaryResult = await cloudinary.uploader.upload(localPath, {
+      folder: `/${projectName}`,
+    });
+    console.log(cloudinaryResult.secure_url);
+    fs.unlinkSync(localPath);
+    // Check if phone number starts with 0 and replace it with +92
     const phoneWithCountryCode = phone.startsWith("0")
       ? `+92${phone.slice(1)}`
       : phone;
@@ -297,12 +239,13 @@ app.post("/signup", upload.single("image"), async (req, res) => {
       image: cloudinaryResult.secure_url,
       password: hashedPassword,
       gender,
-      phone: phoneWithCountryCode,
+      phone: phoneWithCountryCode, // Store phone with country code
       cnic,
       role: "lawyer",
       otp: otp,
       expiresAt: Date.now() + 10 * 60 * 1000,
     });
+    // await user.save()
 
     await transporter.sendMail({
       from: "usmanmehsud3@gmail.com",
@@ -310,14 +253,12 @@ app.post("/signup", upload.single("image"), async (req, res) => {
       subject: "Your OTP Verification Code",
       html: `<p>Your OTP is: <strong>${otp}</strong></p>`,
     });
-
     res.status(200).json({ message: "OTP sent to your email." });
   } catch (err) {
     console.error("Signup Error:", err);
     res.status(500).json({ message: "Signup failed", error: err.message });
   }
 });
-
 
 
 // Signup layer Route (Sends OTP)
@@ -501,7 +442,7 @@ app.get("/lawyer/:id", async (req, res) => {
 // Update user details by ID
 
 app.put("/lawyer/:id", async (req, res) => {
-  // console.log(req.body);
+  console.log(req.body);
   try {
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
@@ -676,8 +617,8 @@ app.post("/contact-with-admin", async (req, res) => {
   const { name, email, message } = req.body;
   try {
     console.log(email)
-    const user = await OnlyUser.findOne({ email: email })
-    const lawyer = await User.findOne({ email: email })
+    const user = await OnlyUser.findOne({ email:email })
+    const lawyer = await User.findOne({ email:email })
     console.log(user, lawyer)
     if (user) {
       await transporter.sendMail({
@@ -710,49 +651,6 @@ app.post("/contact-with-admin", async (req, res) => {
 
   } catch (err) {
     res.status(500).json({ message: "Error send message", error: err.message });
-  }
-});
-
-
-app.get("/users", async (req, res) => {
-  try {
-    const users = await OnlyUser.find();
-    res.json(users);
-  } catch (err) {
-    res.status(500).json({ message: "Failed to fetch users" });
-  }
-});
-
-app.get("/activecases", async (req, res) => {
-  try {
-    const cases = await ActiveCases.find();
-    res.json(cases);
-  } catch (err) {
-    res.status(500).json({ message: "Failed to fetch Active Cases" });
-  }
-});
-
-app.put('/lawyerSpecializedCase/:id', async (req, res) => {
-  const { id } = req.params;
-
-  console.log(id, req.body)
-  const { valueToRemove } = req.body;
-  try {
-    const lawyer = await User.findById(id);
-    if (!lawyer) return res.status(404).json({ error: 'Lawyer not found' });
-
-    // Filter the array to remove the value
-    lawyer.specializedIn = lawyer.specializedIn.filter(
-      (specialization) => specialization !== valueToRemove
-    );
-
-    console.log(lawyer)
-
-    await lawyer.save();
-    res.status(200).json({ message: 'Specialization updated', data: lawyer });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Server error' });
   }
 });
 

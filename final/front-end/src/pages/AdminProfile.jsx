@@ -80,7 +80,7 @@ const AdminProfile = () => {
     const { username, phone, age, qualification, gender, picture } = profileData;
 
     const res = await axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}/update-profile`,
+      "http://localhost:5000/update-profile",
       { username, phone, age, qualification, gender, picture },
       { headers: { Authorization: `Bearer ${token}` } }
     );

@@ -17,11 +17,7 @@ const userSchema = new mongoose.Schema({
   isVerified: { type: Boolean, default: false },
   experience: Number,
   totalCases: Number,
-  specializedIn: {
-  type: [String],
-  default:"civil law"
-},
-// specializedIn:{type:String, default:"Civil"},
+  specializedIn: String,
   status: {
     type: String,
     enum: ["available", "inactive"],

@@ -30,12 +30,8 @@ const handleLogin = async (e) => {
   const email = form.email.trim().toLowerCase();
   const password = form.password.trim();
 
-  const apiUrl = import.meta.env.VITE_BACKEND_URL;
-console.log("✅ BACKEND URL:", apiUrl);
-
-
   try {
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/login`, {
+    const res = await fetch("http://localhost:5000/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }), // Ensure proper body format

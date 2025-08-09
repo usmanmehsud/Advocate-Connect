@@ -16,7 +16,7 @@ const Profile = () => {
   useEffect(() => {
     const getCurrentLawyer = async () => {
       try {
-        const selectedLawyer = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/lawyer/${id}`);
+        const selectedLawyer = await axios.get(`http://localhost:5000/lawyer/${id}`);
         if (selectedLawyer && selectedLawyer.data.length > 0) {
           setLawyer(selectedLawyer.data[0]);
           setCurrentStatus(selectedLawyer.data[0].status);
@@ -32,7 +32,7 @@ const Profile = () => {
 
   const toggleStatus = async () => {
     try {
-      const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/lawyer/status/${id}`);
+      const res = await axios.put(`http://localhost:5000/lawyer/status/${id}`);
       Swal.fire("Status Updated", `User is now ${res.data.status}`, "success");
       setCurrentStatus(res.data.status);
     } catch (err) {
@@ -40,22 +40,6 @@ const Profile = () => {
       Swal.fire("Error", "Could not update status", "error");
     }
   };
-
-  const deleteCaseType= async(item)=>{
-    console.log(item)
-    try {
-      
-      const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/lawyerSpecializedCase/${id}`, {valueToRemove:item});
-      console.log(response.data)
-      setLawyer(response.data.data)
-      swal("Success!", "User updated successfully!", "success");
-      // navigate(`/edit-profile/${id}`);
-
-    } catch (error) {
-      console.error("Update failed:", error);
-      swal("Oops!", "Something went wrong!", "error");
-    }
-  }
 
   return (
    <>
@@ -71,7 +55,7 @@ const Profile = () => {
       </div>
 
       <div className="profile-right" style={{ position: "relative" }}>
-        {profile._id!=id?"":
+        {profile.role=="user"?"":
         <button
         className="status-button"
         onClick={toggleStatus}
@@ -91,10 +75,7 @@ const Profile = () => {
           <div><strong>Experience:</strong> {lawyer.experience} years</div>
           <div><strong>Qualification:</strong> {lawyer.qualification}</div>
           <div><strong>Total Cases:</strong> {lawyer.totalCases}</div>
-          <div><strong>Specialized in:</strong> {lawyer.specializedIn.map((item, idx)=>{
-            return<button disabled={profile._id!=id?true:false} style={{backgroundColor:"goldenrod", padding:"3px", borderRadius:"6px", marginLeft:"3px", cursor:"pointer", fontWeight:"bold"}} 
-            onClick={()=>{deleteCaseType(item)}} key={idx}>{item}{profile._id!=id?"":<span>🗑️</span>} </button>
-          })}</div>
+          <div><strong>Specialized in:</strong> {lawyer.specializedIn}</div>
           <div><strong>Address:</strong> {lawyer.address}</div>
           <div>{lawyer.cnic && <strong>CNIC:</strong>} {lawyer.cnic}</div>
           <div>{lawyer.fee && <strong>Fee: $</strong>} {lawyer.fee}</div>
@@ -104,7 +85,7 @@ const Profile = () => {
 
         <div className="button-group">
           <button className="hire-button" onClick={() => navigate('/services')}>View as</button>
-          {profile._id!=id?"":
+          {profile.role=="user"?"":
           <button className="hire-button" onClick={() => navigate(`/edit-profile/${lawyer._id}`)}>Edit</button>
           
           }

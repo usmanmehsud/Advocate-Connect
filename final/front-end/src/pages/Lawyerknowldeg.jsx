@@ -56,9 +56,8 @@ const Lawyerknowldeg = () => {
 
 
 
-<div className='reh'>
+
 <Termsandconditions/>
-</div>
 
 <Privacyandpolicies/>
 
