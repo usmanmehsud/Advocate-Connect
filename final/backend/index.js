@@ -13,11 +13,22 @@ const fs = require("fs");
 const User = require('./models/User');
 const OnlyUser = require('./models/OnlyUser');
 
-app.use(cors());
+// ✅ Express JSON parser (yeh zaroori hai taake POST/PUT body parse ho)
 app.use(express.json());
 
+// ✅ CORS setup (duplicate hata diya, sirf ek rakha)
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173", // local development ke liye
+      "https://advocate-connect-two.vercel.app", // frontend production URL
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
-
+// ✅ MongoDB Atlas connect
 mongoose.connect(
   "mongodb+srv://usman1:conforim%401@cluster0.vxlj4pk.mongodb.net/advconnect?retryWrites=true&w=majority&appName=Cluster0",
   {
@@ -27,6 +38,7 @@ mongoose.connect(
 )
 .then(() => console.log("✅ MongoDB Atlas Connected"))
 .catch((err) => console.error("❌ MongoDB Connection Failed:", err));
+
 
 
 //Active Cases Schema & Model
@@ -209,6 +221,21 @@ app.post("/rate-lawyer", authenticateToken, async (req, res) => {
     res.status(500).json({ message: "Failed to submit rating" });
   }
 });
+// Get top rated lawyers
+app.get("/high-rated-lawyers", async (req, res) => {
+  try {
+    const lawyers = await User.find({ role: "lawyer" })
+      .sort({ averageRating: -1 }) // highest rating first
+      .limit(5) // sirf top 5
+      .select("name email averageRating"); // jo fields dikhani hain
+
+    res.json(lawyers);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to fetch high rated lawyers" });
+  }
+});
+
 
 // Pending OTP Users (Temp Store)
 const pendingUsers = new Map();
