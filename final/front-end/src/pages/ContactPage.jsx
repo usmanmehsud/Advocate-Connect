@@ -42,7 +42,7 @@ console.log(email)
     }
    
     try {
-  const response = await axios.post(`http://localhost:5000/contact-with-admin`, {
+  const response = await axios.post(`${import.meta.env.VITE_API_URL}/contact-with-admin`, {
     name,
     email,
     message,

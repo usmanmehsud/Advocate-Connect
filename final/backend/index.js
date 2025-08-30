@@ -16,12 +16,19 @@ const OnlyUser = require('./models/OnlyUser');
 app.use(cors());
 app.use(express.json());
 
-// MongoDB Connection
-// 
-mongoose
-  .connect("mongodb://localhost:27017/lawyerHiring")
-  .then(() => console.log("✅ MongoDB Connected"))
-  .catch((err) => console.error("❌ MongoDB Connection Failed:", err));
+
+
+mongoose.connect(
+  "mongodb+srv://usman1:conforim%401@cluster0.vxlj4pk.mongodb.net/advconnect?retryWrites=true&w=majority&appName=Cluster0",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+)
+.then(() => console.log("✅ MongoDB Atlas Connected"))
+.catch((err) => console.error("❌ MongoDB Connection Failed:", err));
+
+
 //Active Cases Schema & Model
 const activeCasesSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "OnlyUser" },

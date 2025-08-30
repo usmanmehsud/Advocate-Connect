@@ -13,7 +13,7 @@ const HirePage = () => {
 
     const fetchLawyers = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/lawyers");
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/lawyers`);
         setLawyers(res.data);
       } catch (err) {
         console.error("Failed to fetch lawyers", err);

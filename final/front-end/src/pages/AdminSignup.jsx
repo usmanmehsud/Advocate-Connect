@@ -62,7 +62,7 @@ const AdminSignup = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/signup", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -89,7 +89,7 @@ const AdminSignup = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/verify-otp", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: form.email, otp }),
